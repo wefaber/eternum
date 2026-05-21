@@ -3,32 +3,47 @@ import { motion } from "motion/react";
 import { Wrench, CheckCircle } from "lucide-react";
 import { Field, Input, Select, TextArea } from "../components/FormFields";
 
+type TipoServicio = "" | "laboratorio" | "instalacion" | "configuracion" | "otro";
+
 interface Errors {
-  solicitante?: string;
-  area?: string;
   tipo?: string;
+  laboratorio?: string;
+  software?: string;
+  equipo?: string;
   descripcion?: string;
-  prioridad?: string;
 }
 
 export default function Servicio() {
-  const [solicitante, setSolicitante] = useState("");
-  const [area, setArea] = useState("");
-  const [tipo, setTipo] = useState("");
+  const [tipo, setTipo] = useState<TipoServicio>("");
+  const [laboratorio, setLaboratorio] = useState("");
+  const [software, setSoftware] = useState("");
+  const [equipo, setEquipo] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [prioridad, setPrioridad] = useState("");
   const [errors, setErrors] = useState<Errors>({});
   const [submitted, setSubmitted] = useState(false);
 
   const validate = (): boolean => {
     const e: Errors = {};
-    if (!solicitante.trim()) e.solicitante = "El nombre es obligatorio";
-    if (!area) e.area = "Seleccioná un área";
-    if (!tipo) e.tipo = "Seleccioná un tipo de servicio";
-    if (!descripcion.trim()) e.descripcion = "Describí el servicio solicitado";
-    else if (descripcion.trim().length < 20)
-      e.descripcion = "Describí con más detalle (mín. 20 caracteres)";
-    if (!prioridad) e.prioridad = "Seleccioná una prioridad";
+    if (!tipo) {
+      e.tipo = "Seleccioná el tipo de servicio";
+    } else {
+      switch (tipo) {
+        case "laboratorio":
+          if (!laboratorio.trim()) e.laboratorio = "Indicá el número de laboratorio";
+          break;
+        case "instalacion":
+          if (!software.trim()) e.software = "Indicá el software a instalar";
+          break;
+        case "configuracion":
+          if (!equipo.trim()) e.equipo = "Indicá el número de equipo";
+          break;
+        case "otro":
+          if (!descripcion.trim()) e.descripcion = "Describí el servicio solicitado";
+          else if (descripcion.trim().length < 20)
+            e.descripcion = "Describí con más detalle (mín. 20 caracteres)";
+          break;
+      }
+    }
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -49,14 +64,21 @@ export default function Servicio() {
           <CheckCircle className="w-8 h-8 text-eternum-accent" />
         </div>
         <h2 className="text-2xl font-serif italic text-eternum-dark mb-2">
-          Solicitud registrada
+          Solicitud enviada
         </h2>
         <p className="text-eternum-gray-4">
-          Tu solicitud de servicio fue enviada al área de soporte.
+          Tu solicitud de servicio fue registrada con estado <strong>pendiente</strong>.
         </p>
       </motion.div>
     );
   }
+
+  const tipos = [
+    { value: "laboratorio", label: "Preparación de laboratorio" },
+    { value: "instalacion", label: "Instalación de software" },
+    { value: "configuracion", label: "Configuración de equipo" },
+    { value: "otro", label: "Otro" },
+  ];
 
   return (
     <div className="max-w-lg mx-auto">
@@ -65,10 +87,10 @@ export default function Servicio() {
           <Wrench className="w-7 h-7 text-eternum-primary" />
         </div>
         <h2 className="text-2xl font-serif italic text-eternum-dark">
-          Solicitud de <span className="text-eternum-primary">Servicio</span>
+          Solicitud de <span className="text-eternum-primary">Servicio Técnico</span>
         </h2>
         <p className="text-sm text-eternum-gray-4 mt-1">
-          Registrá una solicitud de soporte técnico o servicio
+          Solicitá una intervención técnica en el instituto
         </p>
       </div>
 
@@ -76,66 +98,82 @@ export default function Servicio() {
         onSubmit={handleSubmit}
         className="bg-white rounded-xl border border-eternum-gray-2 p-6 space-y-5"
       >
-        <Field label="Solicitante" required error={errors.solicitante}>
-          <Input
-            value={solicitante}
-            onChange={setSolicitante}
-            placeholder="Nombre y apellido"
-          />
-        </Field>
-
-        <Field label="Área" required error={errors.area}>
-          <Select
-            value={area}
-            onChange={setArea}
-            placeholder="Seleccioná un área"
-            options={[
-              { value: "administracion", label: "Administración" },
-              { value: "docencia", label: "Docencia" },
-              { value: "alumnos", label: "Alumnos" },
-              { value: "sistemas", label: "Sistemas" },
-              { value: "otro", label: "Otro" },
-            ]}
-          />
-        </Field>
-
         <Field label="Tipo de servicio" required error={errors.tipo}>
           <Select
             value={tipo}
-            onChange={setTipo}
-            placeholder="Seleccioná un tipo"
-            options={[
-              { value: "hardware", label: "Reparación de hardware" },
-              { value: "software", label: "Instalación / actualización de software" },
-              { value: "red", label: "Conectividad de red" },
-              { value: "cuenta", label: "Gestión de cuentas de usuario" },
-              { value: "otro", label: "Otro" },
-            ]}
+            onChange={(v) => {
+              setTipo(v as TipoServicio);
+              setLaboratorio("");
+              setSoftware("");
+              setEquipo("");
+              setDescripcion("");
+              setErrors({});
+            }}
+            placeholder="Seleccioná el tipo de intervención"
+            options={tipos}
           />
         </Field>
 
-        <Field label="Descripción del servicio" required error={errors.descripcion}>
-          <TextArea
-            value={descripcion}
-            onChange={setDescripcion}
-            placeholder="Describí en detalle el servicio solicitado..."
-            rows={4}
-          />
-        </Field>
+        {tipo === "laboratorio" && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Field label="N° de laboratorio" required error={errors.laboratorio}>
+              <Input
+                value={laboratorio}
+                onChange={setLaboratorio}
+                placeholder="Ej: Laboratorio 2"
+              />
+            </Field>
+          </motion.div>
+        )}
 
-        <Field label="Prioridad" required error={errors.prioridad}>
-          <Select
-            value={prioridad}
-            onChange={setPrioridad}
-            placeholder="Seleccioná una prioridad"
-            options={[
-              { value: "baja", label: "Baja — Sin urgencia" },
-              { value: "media", label: "Media — Requiere atención" },
-              { value: "alta", label: "Alta — Urgente" },
-              { value: "critica", label: "Crítica — Bloqueante" },
-            ]}
-          />
-        </Field>
+        {tipo === "instalacion" && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Field label="Software a instalar" required error={errors.software}>
+              <Input
+                value={software}
+                onChange={setSoftware}
+                placeholder="Ej: AutoCAD 2026, Visual Studio Code"
+              />
+            </Field>
+          </motion.div>
+        )}
+
+        {tipo === "configuracion" && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Field label="N° de equipo" required error={errors.equipo}>
+              <Input
+                value={equipo}
+                onChange={setEquipo}
+                placeholder="Número de serie o etiqueta del equipo"
+              />
+            </Field>
+          </motion.div>
+        )}
+
+        {tipo === "otro" && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Field label="Descripción del servicio" required error={errors.descripcion}>
+              <TextArea
+                value={descripcion}
+                onChange={setDescripcion}
+                placeholder="Describí en detalle el servicio solicitado..."
+                rows={4}
+              />
+            </Field>
+          </motion.div>
+        )}
 
         <motion.button
           type="submit"

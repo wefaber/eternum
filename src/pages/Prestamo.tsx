@@ -5,33 +5,34 @@ import { Field, Input, Select, TextArea } from "../components/FormFields";
 
 interface Errors {
   solicitante?: string;
-  documento?: string;
-  equipo?: string;
-  motivo?: string;
-  fechaDevolucion?: string;
+  equipoSerie?: string;
+  responsable?: string;
+  fechaDesde?: string;
+  fechaHasta?: string;
+  componentes?: string;
 }
 
 export default function Prestamo() {
   const [solicitante, setSolicitante] = useState("");
-  const [documento, setDocumento] = useState("");
-  const [equipo, setEquipo] = useState("");
-  const [motivo, setMotivo] = useState("");
-  const [fechaDevolucion, setFechaDevolucion] = useState("");
+  const [equipoSerie, setEquipoSerie] = useState("");
+  const [responsable, setResponsable] = useState("");
+  const [fechaDesde, setFechaDesde] = useState("");
+  const [fechaHasta, setFechaHasta] = useState("");
+  const [componentes, setComponentes] = useState("");
   const [errors, setErrors] = useState<Errors>({});
   const [submitted, setSubmitted] = useState(false);
 
   const validate = (): boolean => {
     const e: Errors = {};
-    if (!solicitante.trim()) e.solicitante = "El nombre es obligatorio";
-    if (!documento.trim()) e.documento = "El documento es obligatorio";
-    if (!equipo) e.equipo = "Seleccioná el tipo de equipo";
-    if (!motivo.trim()) e.motivo = "Indicá el motivo del préstamo";
-    if (!fechaDevolucion) e.fechaDevolucion = "Indicá la fecha estimada de devolución";
+    if (!solicitante.trim()) e.solicitante = "El nombre del solicitante es obligatorio";
+    if (!equipoSerie.trim()) e.equipoSerie = "El número de serie del equipo es obligatorio";
+    if (!responsable.trim()) e.responsable = "El nombre del responsable es obligatorio";
+    if (!fechaDesde) e.fechaDesde = "Indicá la fecha y hora de préstamo";
+    if (!fechaHasta) e.fechaHasta = "Indicá la fecha prevista de devolución";
     else {
-      const fecha = new Date(fechaDevolucion);
-      const hoy = new Date();
-      hoy.setHours(0, 0, 0, 0);
-      if (fecha < hoy) e.fechaDevolucion = "La fecha debe ser a partir de hoy";
+      const desde = new Date(fechaDesde);
+      const hasta = new Date(fechaHasta);
+      if (hasta < desde) e.fechaHasta = "La devolución debe ser posterior al préstamo";
     }
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -56,11 +57,14 @@ export default function Prestamo() {
           Préstamo registrado
         </h2>
         <p className="text-eternum-gray-4">
-          El préstamo de equipo fue registrado correctamente.
+          El equipo <strong>{equipoSerie}</strong> fue prestado a{" "}
+          <strong>{solicitante}</strong> correctamente.
         </p>
       </motion.div>
     );
   }
+
+  const today = new Date().toISOString().slice(0, 16);
 
   return (
     <div className="max-w-lg mx-auto">
@@ -72,7 +76,7 @@ export default function Prestamo() {
           Préstamo de <span className="text-eternum-primary">Equipo</span>
         </h2>
         <p className="text-sm text-eternum-gray-4 mt-1">
-          Registrá el préstamo de un equipo o dispositivo
+          Registrá el préstamo temporal de un equipo del inventario
         </p>
       </div>
 
@@ -80,52 +84,52 @@ export default function Prestamo() {
         onSubmit={handleSubmit}
         className="bg-white rounded-xl border border-eternum-gray-2 p-6 space-y-5"
       >
-        <Field label="Solicitante" required error={errors.solicitante}>
+        <Field label="Usuario solicitante" required error={errors.solicitante}>
           <Input
             value={solicitante}
             onChange={setSolicitante}
-            placeholder="Nombre y apellido"
+            placeholder="Nombre del solicitante"
           />
         </Field>
 
-        <Field label="Documento de identidad" required error={errors.documento}>
+        <Field label="Equipo (n° de serie)" required error={errors.equipoSerie}>
           <Input
-            value={documento}
-            onChange={setDocumento}
-            placeholder="Cédula de identidad"
+            value={equipoSerie}
+            onChange={setEquipoSerie}
+            placeholder="Número de serie del equipo"
           />
         </Field>
 
-        <Field label="Tipo de equipo" required error={errors.equipo}>
-          <Select
-            value={equipo}
-            onChange={setEquipo}
-            placeholder="Seleccioná un equipo"
-            options={[
-              { value: "notebook", label: "Notebook" },
-              { value: "pc", label: "PC de escritorio" },
-              { value: "tablet", label: "Tablet" },
-              { value: "proyector", label: "Proyector" },
-              { value: "periferico", label: "Periférico (mouse, teclado, etc.)" },
-              { value: "otro", label: "Otro" },
-            ]}
+        <Field label="Responsable del préstamo" required error={errors.responsable}>
+          <Input
+            value={responsable}
+            onChange={setResponsable}
+            placeholder="Técnico o administrador que registra"
           />
         </Field>
 
-        <Field label="Motivo del préstamo" required error={errors.motivo}>
+        <Field label="Fecha y hora de préstamo" required error={errors.fechaDesde}>
+          <Input
+            type="datetime-local"
+            value={fechaDesde}
+            onChange={setFechaDesde}
+          />
+        </Field>
+
+        <Field label="Fecha prevista de devolución" required error={errors.fechaHasta}>
+          <Input
+            type="datetime-local"
+            value={fechaHasta}
+            onChange={setFechaHasta}
+          />
+        </Field>
+
+        <Field label="Componentes adicionales (opcional)">
           <TextArea
-            value={motivo}
-            onChange={setMotivo}
-            placeholder="Indicá el motivo del préstamo..."
-            rows={3}
-          />
-        </Field>
-
-        <Field label="Fecha estimada de devolución" required error={errors.fechaDevolucion}>
-          <Input
-            type="date"
-            value={fechaDevolucion}
-            onChange={setFechaDevolucion}
+            value={componentes}
+            onChange={setComponentes}
+            placeholder="Cables, adaptadores, periféricos incluidos..."
+            rows={2}
           />
         </Field>
 

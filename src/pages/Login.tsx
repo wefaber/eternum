@@ -26,9 +26,7 @@ export default function Login() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      setSubmitted(true);
-    }
+    if (validate()) setSubmitted(true);
   };
 
   if (submitted) {
@@ -62,7 +60,7 @@ export default function Login() {
           Inicio de <span className="text-eternum-primary">Sesión</span>
         </h2>
         <p className="text-sm text-eternum-gray-4 mt-1">
-          Ingresá tus credenciales para acceder al sistema
+          Ingresá tus credenciales para acceder al sistema SGRSI
         </p>
       </div>
 
@@ -70,11 +68,11 @@ export default function Login() {
         onSubmit={handleSubmit}
         className="bg-white rounded-xl border border-eternum-gray-2 p-6 space-y-5"
       >
-        <Field label="Usuario" required error={errors.usuario}>
+        <Field label="Nombre de usuario" required error={errors.usuario}>
           <Input
             value={usuario}
             onChange={setUsuario}
-            placeholder="nombre de usuario"
+            placeholder="usuario"
           />
         </Field>
 

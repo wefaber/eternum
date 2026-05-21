@@ -4,25 +4,67 @@ import {
   LogIn,
   Wrench,
   Handshake,
-  AlertTriangle,
-  ScanLine,
+  TicketCheck,
+  PackagePlus,
   ArrowLeft,
   LayoutDashboard,
 } from "lucide-react";
 import Login from "./pages/Login";
 import Servicio from "./pages/Servicio";
 import Prestamo from "./pages/Prestamo";
-import Incidencia from "./pages/Incidencia";
-import Escaneo from "./pages/Escaneo";
+import Ticket from "./pages/Ticket";
+import Inventario from "./pages/Inventario";
 
-type Page = "home" | "login" | "servicio" | "prestamo" | "incidencia" | "escaneo";
+type Page =
+  | "home"
+  | "login"
+  | "servicio"
+  | "prestamo"
+  | "ticket"
+  | "inventario";
 
-const pages: { id: Page; label: string; icon: typeof LogIn; desc: string }[] = [
-  { id: "login", label: "Inicio de Sesión", icon: LogIn, desc: "Autenticación de usuarios del sistema" },
-  { id: "servicio", label: "Solicitud de Servicio", icon: Wrench, desc: "Registro de solicitudes de soporte técnico" },
-  { id: "prestamo", label: "Préstamo de Equipo", icon: Handshake, desc: "Gestión de préstamos de equipamiento" },
-  { id: "incidencia", label: "Reporte de Incidencia", icon: AlertTriangle, desc: "Notificación de fallas o problemas" },
-  { id: "escaneo", label: "Escaneo de Equipo", icon: ScanLine, desc: "Registro de escaneo y verificación de equipos" },
+const pages: {
+  id: Page;
+  label: string;
+  icon: typeof LogIn;
+  desc: string;
+  modulo: string;
+}[] = [
+  {
+    id: "login",
+    label: "Inicio de Sesión",
+    icon: LogIn,
+    desc: "Autenticación de usuarios del sistema",
+    modulo: "AUTH",
+  },
+  {
+    id: "ticket",
+    label: "Ticket de Incidencia",
+    icon: TicketCheck,
+    desc: "Mesa de ayuda — reportá un problema",
+    modulo: "TKT",
+  },
+  {
+    id: "inventario",
+    label: "Alta de Equipo",
+    icon: PackagePlus,
+    desc: "Registrá un nuevo equipo en el inventario",
+    modulo: "INV",
+  },
+  {
+    id: "prestamo",
+    label: "Préstamo de Equipo",
+    icon: Handshake,
+    desc: "Gestión de préstamos de equipamiento",
+    modulo: "PRES",
+  },
+  {
+    id: "servicio",
+    label: "Solicitud de Servicio",
+    icon: Wrench,
+    desc: "Solicitud de intervención técnica",
+    modulo: "SERV",
+  },
 ];
 
 export default function App() {
@@ -36,10 +78,10 @@ export default function App() {
         return <Servicio />;
       case "prestamo":
         return <Prestamo />;
-      case "incidencia":
-        return <Incidencia />;
-      case "escaneo":
-        return <Escaneo />;
+      case "ticket":
+        return <Ticket />;
+      case "inventario":
+        return <Inventario />;
       default:
         return null;
     }
@@ -120,6 +162,9 @@ export default function App() {
                         <p className="text-sm text-eternum-gray-4 mt-1">
                           {p.desc}
                         </p>
+                        <span className="inline-block mt-2 text-[10px] font-mono tracking-widest uppercase text-eternum-gray-3">
+                          {p.modulo}
+                        </span>
                       </div>
                     </motion.button>
                   );
