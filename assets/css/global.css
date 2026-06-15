@@ -100,7 +100,9 @@ h1 {
 }
 
 .nav-icono {
-  font-size: 14pt;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .sidebar-footer {
@@ -180,9 +182,9 @@ h1 {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 14pt;
+  display: inline-flex;
+  align-items: center;
   margin-left: 4px;
-  /* JS: al hacer click activa/desactiva modo oscuro */
 }
 
 .topbar-usuario {
