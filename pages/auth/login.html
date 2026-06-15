@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SGRSI — Iniciar sesión</title>
-  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="../../assets/css/pages/auth/auth.css">
 </head>
 <body>
 
   <main class="login-wrapper">
 
     <header class="login-header">
-      <img src="logo.png" alt="Logo SGRSI" class="login-logo">
+      <img src="../../assets/img/logo.png" alt="Logo SGRSI" class="login-logo">
       <h1>Iniciá sesión</h1>
       <p class="login-subtitle">ITI CETP — Sistema de Gestión de Recursos</p>
     </header>
@@ -45,8 +45,7 @@
               autocomplete="current-password"
             >
             <button type="button" class="btn-toggle-password" aria-label="Mostrar contraseña" id="toggle-password">
-              <!-- ícono ojo -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                 <circle cx="12" cy="12" r="3"/>
               </svg>
@@ -54,7 +53,7 @@
           </div>
         </div>
 
-        <a href="dashboard.html" class="btn-ingresar">Ingresar</a>
+        <a href="../dashboard/dashboard.html" class="btn-ingresar">Ingresar</a>
 
       </form>
     </section>

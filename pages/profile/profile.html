@@ -4,29 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SGRSI — Perfil</title>
-  <link rel="stylesheet" href="common.css">
-  <link rel="stylesheet" href="perfil.css">
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/pages/profile/profile.css">
 </head>
 <body>
 
-  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
-    <!-- SUGERENCIA: el control de accesibilidad (tema, tamaño de fuente, alto contraste)
-         debe implementarse con JS para aplicar clases y guardar preferencias. -->
     <div class="sidebar-brand">
-      <img src="logo.png" alt="Logo SGRSI" class="sidebar-logo">
+      <img src="../../assets/img/logo.png" alt="Logo SGRSI" class="sidebar-logo">
       <span class="sidebar-nombre">Lux</span>
     </div>
 
     <nav class="sidebar-nav" aria-label="Navegación principal">
       <ul>
-        <li><a href="dashboard.html" class="nav-link"><span class="nav-icono">⊞</span> Inicio</a></li>
-        <li><a href="inventario.html" class="nav-link"><span class="nav-icono">📦</span> Inventario</a></li>
-        <li><a href="estado-equipos.html" class="nav-link"><span class="nav-icono">🖥</span> Estado de Equipos</a></li>
-        <li><a href="tickets.html" class="nav-link"><span class="nav-icono">🎫</span> Tickets</a></li>
-        <li><a href="prestamos.html" class="nav-link"><span class="nav-icono">📖</span> Préstamos</a></li>
-        <li><a href="solicitudes.html" class="nav-link"><span class="nav-icono">🔧</span> Solicitudes</a></li>
-        <li><a href="perfil.html" class="nav-link activo"><span class="nav-icono">👤</span> Perfil</a></li>
+        <li><a href="../dashboard/dashboard.html" class="nav-link">
+          <svg class="nav-icono" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5L12 3l9 6.5"/><path d="M9 22V12h6v10"/></svg> Inicio
+        </a></li>
+        <li><a href="../inventario/inventario.html" class="nav-link">
+          <svg class="nav-icono" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73L12 3 4 6.27A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73L12 21l8-3.27A2 2 0 0 0 21 16z"/><path d="M7 9.5l10 4"/></svg> Inventario
+        </a></li>
+        <li><a href="../equipment-status/equipment-status.html" class="nav-link">
+          <svg class="nav-icono" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8"/></svg> Estado de Equipos
+        </a></li>
+        <li><a href="../tickets/tickets.html" class="nav-link">
+          <svg class="nav-icono" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10v4a2 2 0 0 1-2 2h-1"/><path d="M3 10v4a2 2 0 0 0 2 2h1"/><path d="M7 12h10"/></svg> Tickets
+        </a></li>
+        <li><a href="../prestamos/prestamos.html" class="nav-link">
+          <svg class="nav-icono" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v14"/><path d="M7 7h10"/></svg> Préstamos
+        </a></li>
+        <li><a href="../solicitudes/solicitudes.html" class="nav-link">
+          <svg class="nav-icono" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 12.3a4 4 0 1 0-5.6 5.6l5.6-5.6z"/><path d="M20 14v7h-7"/></svg> Solicitudes
+        </a></li>
+        <li><a href="../profile/profile.html" class="nav-link activo">
+          <svg class="nav-icono" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Perfil
+        </a></li>
       </ul>
     </nav>
 
@@ -35,16 +46,16 @@
     </div>
   </aside>
 
-  <!-- CONTENIDO PRINCIPAL -->
   <div class="layout">
 
-    <!-- TOPBAR -->
     <header class="topbar">
       <div class="topbar-controles">
         <button class="ctrl-fuente" type="button" data-size="small">A</button>
         <button class="ctrl-fuente activo" type="button" data-size="medium">A</button>
         <button class="ctrl-fuente" type="button" data-size="large">A</button>
-        <button class="ctrl-tema" type="button" id="btn-tema" aria-label="Cambiar tema">🌙</button>
+        <button class="ctrl-tema" type="button" id="btn-tema" aria-label="Cambiar tema">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
       </div>
       <div class="topbar-usuario">
         <div class="usuario-avatar">MR</div>
@@ -55,7 +66,6 @@
       </div>
     </header>
 
-    <!-- MAIN -->
     <main class="main-content">
 
       <section class="encabezado-pagina" aria-label="Encabezado de perfil">
@@ -65,7 +75,6 @@
         </div>
       </section>
 
-      <!-- DATOS DEL USUARIO -->
       <section class="card datos-usuario" aria-label="Datos del usuario">
         <div class="usuario-resumen">
           <div class="usuario-avatar-grande">MR</div>
@@ -96,12 +105,12 @@
         </dl>
       </section>
 
-      <!-- CAMBIAR CONTRASEÑA + ACCESIBILIDAD -->
       <section class="grid-perfil" aria-label="Configuración de cuenta">
 
-        <!-- CAMBIAR CONTRASEÑA -->
         <article class="card">
-          <h2>🔒 Cambiar contraseña</h2>
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Cambiar contraseña
+          </h2>
 
           <form class="form-password" action="#" method="post">
             <div class="campo">
@@ -123,9 +132,10 @@
           </form>
         </article>
 
-        <!-- ACCESIBILIDAD -->
         <article class="card">
-          <h2>🔤 Accesibilidad</h2>
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>Accesibilidad
+          </h2>
 
           <div class="accesibilidad-lista">
 
@@ -135,7 +145,9 @@
                 <p class="accesibilidad-desc">Claro u oscuro</p>
               </div>
               <!-- JS: toggle modo oscuro (mismo control que en topbar) -->
-              <button class="icono-toggle" type="button" id="perfil-btn-tema" aria-label="Cambiar tema">🌙</button>
+              <button class="icono-toggle" type="button" id="perfil-btn-tema" aria-label="Cambiar tema">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              </button>
             </div>
 
             <div class="accesibilidad-item">
